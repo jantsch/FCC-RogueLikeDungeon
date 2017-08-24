@@ -19,7 +19,6 @@ const action_types = {
     RESET_PLAYER: "RESET_PLAYER",
     TOGGLE_DARKNESS: "TOGGLE_DARKNESS"
 }
-
 const weapons = [
     { 
         "name": "STICK",
@@ -46,7 +45,6 @@ const weapons = [
         "attack": 30
     }
 ]
-
 const map_cell_to_class =[
     "floot",
     "wall",
@@ -103,8 +101,6 @@ const health_level = [
     5,
     2
 ]
-
-
 const level_player =[
     50,
     120,
@@ -112,10 +108,26 @@ const level_player =[
     230,
     300  
 ]
-
 const boss = {  
   health: 200,
   attack: 40
 }
+const movements = {
+    ARROW_LEFT: 37,
+    ARROW_UP: 38,   
+    ARROW_RIGHT: 39,   
+    ARROW_DOWN: 40,
 
-export {action_types, weapons, map_cell_to_class, cell_type, enemy_level, boss,health_level,level_player}
+}
+
+export {
+        action_types,
+        weapons,
+        map_cell_to_class,
+        cell_type, 
+        enemy_level, 
+        boss,
+        health_level,
+        level_player,
+        movements
+    }

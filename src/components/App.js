@@ -3,7 +3,7 @@ import { PlayerDetails } from './../containers/c-player-details';
 import { Subtitle } from './../containers/c-subtitle';
 import { Map } from './../containers/c-map';
 import KeyHandler, {KEYDOWN} from 'react-key-handler';
-import {cell_type as T,health_level as H , weapons as W, enemy_level as E, boss as B} from './../constants'
+import {cell_type as T,health_level as H , weapons as W, enemy_level as E, boss as B, movements as M} from './../constants'
 
 
 class App extends Component {
@@ -20,43 +20,41 @@ class App extends Component {
   }
 
 
-   _handleKeypress(event, props) {
+  _handleKeypress(event, props) {
       event.preventDefault();   
-      const {location} = props 
+      const {location} = props  
 
       let vector = ''
       switch (event.keyCode) {
-        case 37: console.log(event.key) // LEFT
-            vector = {x: 0 , y: -1}         
-          break;
-        case 38: console.log(event.key) // UP
-            vector = {x: -1 , y: 0}          
-          break;
-        case 39: console.log(event.key) // RIGHT
-            vector = {x: 0 , y: 1}         
-          break;
-        case 40: console.log(event.key) // DOWN
-            vector = {x: 1 , y: 0}        
-          break;
-        default:  
-           break;
-      }
-
-    console.log(this._generateMovement(vector,location))
-    var nextLocation = this._generateMovement(vector,location)
+          case M.ARROW_LEFT: 
+              vector = {x: 0 , y: -1}         
+            break;
+          case M.ARROW_UP: 
+              vector = {x: -1 , y: 0}          
+            break;
+          case M.ARROW_RIGHT:
+              vector = {x: 0 , y: 1}         
+            break;
+          case M.ARROW_DOWN: 
+              vector = {x: 1 , y: 0}        
+            break;
+          default:  
+             break;
+      }    
+    var nextLocation = _generateMovement(vector)
     this._move(props,nextLocation)
-   }
-
-
-  _generateMovement(vector,location){   
-    var nextLocation = {};
-    nextLocation.x = location.x + vector.x
-    nextLocation.y = location.y + vector.y
-    return nextLocation;  
-  }
-  _move(props,nextLocation){
-      const {mapa,location,enemies,weapon,boss,dungeon,health,setMap,setLocationPlayer,resetPlayer,setHealth,updateBoss,setWeapon,setDungeon,updateEnemy,defend,setXP} = props 
     
+    function  _generateMovement(vector){   
+      var nextLocation = {};
+      nextLocation.x = location.x + vector.x
+      nextLocation.y = location.y + vector.y
+      return nextLocation;  
+    }
+  }
+
+  _move(props,nextLocation){
+      const {mapa,location,enemies,weapon,boss,dungeon,health} = props 
+      const {setMap,setLocationPlayer,resetPlayer,setHealth,updateBoss,setWeapon,setDungeon,updateEnemy,defend,setXP }= props 
       switch(mapa[nextLocation.x][nextLocation.y])
       {
         case T.FLOOT:         
@@ -172,28 +170,20 @@ class App extends Component {
      // create rooms
       for (let i = 0; i < numRooms; i++) {
         placeRoom(map);
-      }
-      
+      }      
      // Player
       placePlayer(map)
-
-
      // Health
       for (let i = 0; i < numHealth; i++)  
-        placeHealth(map)
-     
+        placeHealth(map)     
      // Weapon
       placeWeapon(map)
-
      // Enemy
       for (let i = 0; i < numEnemy; i++)  
       placeEnemy(map)
-
-    
-
     if(dungeon === 4)
        placeBoss(map)
-     else
+    else
        placeExit(map)
 
     return map;
@@ -282,12 +272,10 @@ class App extends Component {
               break;
             default:
               break;
-          }
-          // Exit if room would be outside matrix
+          }         
           if (startX < 0 || startY < 0 || startX + width >= map.length || startY + height >= map[0].length) {
             continue;
-          }
-          // check if all spaces are clear
+          }          
           for (let i = startX; i < startX + width; i++) {
             if (map[i].slice(startY, startY + height).every(tile => tile === T.WALL)) {
               numClear++;
@@ -303,9 +291,6 @@ class App extends Component {
           return Math.floor((Math.random() * length) - Math.floor((length - 1 ) / 2));
         }
       }
-
-
-        // Loops until it finds a wall tile
       function findWall(map) {
         const coords = {x: 0, y: 0};
         let wallDir = false;
@@ -317,9 +302,7 @@ class App extends Component {
         
         return {coords: coords, openDir: wallDir};
       }
-
-      // Takes a map matrix and a coordinate object
-      // Returns false if not a wall, otherwise the direction of the open tile
+      
       function isWall(map, coords) {
         // return false if tile isn't wall
         if (map[coords.x][coords.y] !== T.WALL) { return false; }

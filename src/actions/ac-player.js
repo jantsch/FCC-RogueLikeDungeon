@@ -10,10 +10,6 @@ const setWeapon = (weapon) =>
         type: C.SET_WEAPON,
         weapon: weapon
     })
-const setLevel = () =>
-   ({
-        type: C.SET_LEVEL
-    })
 const setXP = (XP) =>
    ({
         type: C.SET_XP,
@@ -22,13 +18,12 @@ const setXP = (XP) =>
 const setDungeon = () =>
    ({
         type: C.SET_DUNGEON
-    })
+  })
 const setLocationPlayer = (coord) =>
  ({
         type: C.SET_LOCATION_PLAYER,
         coord
  })
-
 const defend= (attack) =>
  ({
         type: C.DEFEND,
@@ -41,4 +36,4 @@ const defend= (attack) =>
  })
 
 
- export {setHealth,setWeapon,setLevel,setXP,setDungeon,setLocationPlayer,defend,resetPlayer}
+ export {setHealth,setWeapon,setXP,setDungeon,setLocationPlayer,defend,resetPlayer}
